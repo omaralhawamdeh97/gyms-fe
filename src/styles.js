@@ -56,3 +56,10 @@ export const CategoryDiv = styled.div`
   border-radius: 5px;
   margin-top: 100px;
 `;
+export const SearchBarStyled = styled.input`
+  padding: 0.5rem;
+  margin: 1rem auto;
+  display: block;
+  width: 50%;
+  height: 60px;
+`;
