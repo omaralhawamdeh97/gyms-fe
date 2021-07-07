@@ -5,11 +5,16 @@ import SignUp from "./components/forms/SignUp";
 import GymDetail from "./screens/Home/Gyms/GymDetail";
 import ClassForm from "./components/forms/ClassForm";
 import ClassDetail from "./screens/Home/Classes/ClassDetail";
+import GymForm from "./components/forms/GymForm";
 const Routes = () => {
   return (
     <Switch>
       <Route path="/gyms/classes/:classSlug">
         <ClassDetail />
+      </Route>
+
+      <Route path="/gyms/new">
+        <GymForm />
       </Route>
       <Route path="/gyms/:gymSlug">
         <GymDetail />

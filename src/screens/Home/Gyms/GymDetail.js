@@ -14,6 +14,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import React from "react";
 import InputLabel from "@material-ui/core/InputLabel";
 import { makeStyles } from "@material-ui/core/styles";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -95,6 +96,9 @@ const GymDetail = () => {
               </Select>
             </FormControl>
           </div>
+          <Button variant="outlined" color="primary">
+            New Class
+          </Button>
           <ListWrapper>
             {filterBy === "available"
               ? filterByAvailable.map((x) => <ClassCard clax={x} />)

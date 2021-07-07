@@ -13,6 +13,13 @@ const reducer = (state = initialState, action) => {
         gyms: action.payload,
         loading: false,
       };
+    case actionTypes.ADD_GYM:
+      const { newGym } = action.payload;
+
+      return {
+        ...state,
+        gyms: [...state.gyms, newGym],
+      };
     default:
       return state;
   }
