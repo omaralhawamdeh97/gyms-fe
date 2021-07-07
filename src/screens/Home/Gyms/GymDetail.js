@@ -59,14 +59,16 @@ const GymDetail = () => {
         style={{
           display: "flex",
           alignItems: "center",
-          marginLeft: "65px",
+
           justifyContent: "center",
         }}
       >
-        <ProductWrapper className="col-lg-4 col-md-6 col-sm-6">
-          <h3>{gym.name}</h3>
+        <ProductWrapper>
+          <h3 style={{ marginTop: "20px", marginBottom: "10px" }}>
+            {gym.name}
+          </h3>
           <CardImage alt={gym.name} src={gym.image} />
-          <h4>Classes:</h4>
+
           <div
             style={{
               display: "flex",
@@ -91,12 +93,16 @@ const GymDetail = () => {
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                <MenuItem value={"date"}>Date</MenuItem>
+
                 <MenuItem value={"available"}>Available</MenuItem>
               </Select>
             </FormControl>
           </div>
-          <Button variant="outlined" color="primary">
+          <Button
+            style={{ marginTop: "20px" }}
+            variant="outlined"
+            color="primary"
+          >
             New Class
           </Button>
           <ListWrapper>

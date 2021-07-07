@@ -4,7 +4,7 @@ export const NavDiv = styled.nav`
   background-color: white;
   border-style: solid;
   height: 50px;
-  width: 90px;
+  width: 100px;
 `;
 export const ShopImage = styled.img`
   display: block;
@@ -15,6 +15,7 @@ export const ShopImage = styled.img`
 `;
 export const ListWrapper = styled.div`
   justify-content: flex-start;
+
   display: flex;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -27,11 +28,10 @@ export const ProductWrapper = styled.div`
   text-align: center;
   font-weight: bold;
   border-color: green;
-
-  width: 200px;
+  width: 50%;
   margin: 10px;
   fill-opacity: initial;
-  box-shadow: 4px 4px lightgrey;
+  box-shadow: 4px 4px 4px 4px lightgrey;
 `;
 
 export const HomeDiv = styled.div`
@@ -60,6 +60,26 @@ export const SearchBarStyled = styled.input`
   padding: 0.5rem;
   margin: 1rem auto;
   display: block;
-  width: 50%;
-  height: 60px;
+  width: 40%;
+  height: 55px;
+`;
+
+export const GymCardDiv = styled.div`
+  color: ${(props) => props.theme.mainColor};
+  border-style: ${(props) => (props.selected ? "solid" : "none")};
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+  color: black;
+  border-color: green;
+  width: 20%;
+  margin: 20px;
+  margin-top: 47px;
+  fill-opacity: initial;
+  box-shadow: 4px 4px lightgrey;
+  height: 200px;
+
+  p {
+    font-size: 25px;
+  }
 `;

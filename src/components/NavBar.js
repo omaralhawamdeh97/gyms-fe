@@ -48,10 +48,25 @@ const NavBar = () => {
             Health Center
           </Typography>
         </Link>
+        <div>
+          {user?.role === "admin" ? (
+            <Link to="/gyms/new">
+              <Button
+                variant="outlined"
+                color="primary"
+                style={{ marginLeft: "5px" }}
+              >
+                Add Gym
+              </Button>
+            </Link>
+          ) : (
+            <div />
+          )}
+        </div>
       </Toolbar>
       <div>
         {user ? (
-          <div style={{ display: "flex" }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
             <h5 style={{ marginRight: "5px" }}>Welcome, {user.username}</h5>
             <Button
               variant="outlined"
