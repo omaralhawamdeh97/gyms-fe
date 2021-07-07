@@ -22,7 +22,6 @@ const ClassDetail = () => {
         <ProductWrapper className="col-lg-4 col-md-6 col-sm-6">
           <h3>{clax.name}</h3>
           <CardImage alt={clax.name} src={clax.image} />
-          <h4>Classes:</h4>
         </ProductWrapper>
       </div>
     </div>

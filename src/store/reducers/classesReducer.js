@@ -13,6 +13,13 @@ const reducer = (state = initialState, action) => {
         classes: action.payload,
         loading: false,
       };
+    case actionTypes.ADD_CLASS:
+      const { newClass } = action.payload;
+
+      return {
+        ...state,
+        classes: [...state.classes, newClass],
+      };
     default:
       return state;
   }

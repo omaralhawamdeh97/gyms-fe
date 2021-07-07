@@ -16,3 +16,17 @@ export const fetchClasses = () => {
     }
   };
 };
+export const addClass = (newClass) => {
+  return async (dispatch) => {
+    try {
+      const formData = new FormData();
+      for (const key in newClass) formData.append(key, newClass[key]);
+      const res = await axios.post(`http://localhost:8000/classes`, formData);
+
+      dispatch({
+        type: actionTypes.ADD_CLASS,
+        payload: { newClass: res.data },
+      });
+    } catch (error) {}
+  };
+};

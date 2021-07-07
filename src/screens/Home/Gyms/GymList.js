@@ -6,7 +6,7 @@ const GymList = () => {
   const gymList = gyms?.map((gym) => <GymCard gym={gym} />);
   return (
     <div>
-      <h2>Gym's:</h2>
+      <h2>Gyms:</h2>
       <ListWrapper>{gymList}</ListWrapper>
     </div>
   );

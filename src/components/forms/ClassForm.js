@@ -1,21 +1,20 @@
 import React from "react";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { InputAdornment, IconButton } from "@material-ui/core";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import { signup } from "../../store/actions/authActions";
+import { addClass } from "../../store/actions/classesAction";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 
 function Copyright() {
   return (
@@ -38,24 +37,31 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%",
     marginTop: theme.spacing(3),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
 }));
 
-export default function SignUp() {
+export default function ClassForm() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
   let initialMember = {
-    username: "",
-    firstname: "",
-    lastname: "",
-    email: "",
-    password: "",
+    name: "",
+    price: "",
+    type: "",
+    date: "",
+    image: "",
   };
   const [member, setMember] = useState(initialMember);
 
@@ -68,21 +74,15 @@ export default function SignUp() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(signup(member, history));
+    dispatch(addClass(member, history));
   };
-  const [showPassword, setShowPassword] = useState(false);
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleMouseDownPassword = () => setShowPassword(!showPassword);
-  console.log(member);
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Add Class
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <div className="ahmad"></div>
@@ -92,92 +92,71 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                label="Username"
-                name="username"
-                autoComplete="username"
+                label="Name"
+                name="name"
+                autoComplete="name"
                 autoFocus
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="firstname"
-                variant="outlined"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
                 fullWidth
-                id="lastname"
-                label="Last Name"
-                name="lastname"
-                autoComplete="lname"
+                label="Price"
+                name="price"
+                autoComplete="price"
+                autoFocus
                 onChange={handleChange}
               />
             </Grid>
 
+            <FormControl className={classes.formControl} fullWidth>
+              <InputLabel id="demo-simple-select-label">Type</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                onChange={handleChange}
+              >
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </FormControl>
             <Grid item xs={12}>
               <TextField
-                variant="outlined"
-                required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                type="email"
-                autoComplete="email"
+                required
                 onChange={handleChange}
+                type="date"
+                name="Date"
+                variant="outlined"
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                onChange={handleChange}
-                name="password"
-                label="Password"
+                require
+                type="file"
+                onChange={handleImage}
+                name="image"
                 variant="outlined"
-                type={showPassword ? "text" : "password"} // <-- This is where the magic happens
-                InputProps={{
-                  // <-- This is where the toggle button is added.
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
-                        {showPassword ? <Visibility /> : <VisibilityOff />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
               />
             </Grid>
           </Grid>
+
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
-            type="submit"
             className={classes.submit}
           >
-            Sign Up
+            Add Class
           </Button>
           <Grid container justify="flex-end">
-            <Grid item>
-              <Link to="/signin" variant="body2">
-                Already have an account? Sign in
-              </Link>
-            </Grid>
+            <Grid item></Grid>
           </Grid>
         </form>
       </div>

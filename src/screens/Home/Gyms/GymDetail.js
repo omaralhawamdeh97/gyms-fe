@@ -23,7 +23,7 @@ const GymDetail = () => {
         <ProductWrapper className="col-lg-4 col-md-6 col-sm-6">
           <h3>{gym.name}</h3>
           <CardImage alt={gym.name} src={gym.image} />
-          <h4>Classes:</h4>
+
           <ClassList />
         </ProductWrapper>
       </div>
