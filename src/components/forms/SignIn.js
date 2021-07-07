@@ -28,6 +28,7 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
+    justifyContent: "center",
   },
   image: {
     backgroundImage: "url(https://source.unsplash.com/random)",
@@ -86,74 +87,72 @@ export default function SignIn() {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <form className={classes.form} noValidate onSubmit={handleSubmit}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoComplete="username"
-              onChange={handleChange}
-              autoFocus
-            />
-            <TextField
-              fullWidth
-              onChange={handleChange}
-              name="password"
-              label="Password"
-              variant="outlined"
-              type={showPassword ? "text" : "password"} // <-- This is where the magic happens
-              InputProps={{
-                // <-- This is where the toggle button is added.
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                    >
-                      {showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
+      {/* <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square> */}
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
+            onChange={handleChange}
+            autoFocus
+          />
+          <TextField
+            fullWidth
+            onChange={handleChange}
+            name="password"
+            label="Password"
+            variant="outlined"
+            type={showPassword ? "text" : "password"} // <-- This is where the magic happens
+            InputProps={{
+              // <-- This is where the toggle button is added.
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
 
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs></Grid>
-              <Grid item>
-                <Link to="/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Sign In
+          </Button>
+          <Grid container>
+            <Grid item xs></Grid>
+            <Grid item>
+              <Link to="/signup" variant="body2">
+                {"Don't have an account? Sign Up"}
+              </Link>
             </Grid>
-            <Box mt={5}>
-              <Copyright />
-            </Box>
-          </form>
-        </div>
-      </Grid>
+          </Grid>
+          <Box mt={5}>
+            <Copyright />
+          </Box>
+        </form>
+      </div>
     </Grid>
   );
 }
