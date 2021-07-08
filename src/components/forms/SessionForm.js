@@ -10,11 +10,13 @@ import Container from "@material-ui/core/Container";
 import { useHistory, useParams } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addClass } from "../../store/actions/classesAction";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import { useEffect } from "react";
+import { fetchUsers } from "../../store/actions/authActions";
+import { addSession } from "../../store/actions/sessionsActions";
 
 function Copyright() {
   return (
@@ -52,42 +54,43 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ClassForm() {
+export default function SessionForm() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
-  const types = useSelector((state) => state.typesReducer.types);
-  const { gymId } = useParams();
-
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, []);
+  const users = useSelector((state) => state.authReducer.users);
+  const filtered = users.filter((user) => user.role === "coach");
+  const { classId } = useParams();
+  console.log(filtered, "filtered");
   let initialMember = {
     name: "",
-    price: "",
-    type: "",
-    date: "",
-    image: "",
-    gymId: gymId,
+    capacity: 0,
+    bookedSlots: 0,
+    coachId: null,
+    classId: classId,
+    to: "",
   };
   const [member, setMember] = useState(initialMember);
 
   const handleChange = (event) => {
     setMember({ ...member, [event.target.name]: event.target.value });
   };
-  const handleImage = (event) => {
-    setMember({ ...member, image: event.target.files[0] });
-  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(addClass(member));
+    dispatch(addSession(member));
     history.goBack();
   };
-
+  console.log(member);
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Add Class
+          Add Session
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <div className="ahmad"></div>
@@ -109,47 +112,42 @@ export default function ClassForm() {
                 variant="outlined"
                 required
                 fullWidth
-                label="Price"
-                name="price"
+                label="Capacity"
+                name="capacity"
                 type="number"
                 autoComplete="price"
                 onChange={handleChange}
               />
             </Grid>
-
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                label="Booked Slots"
+                name="bookedSlots"
+                type="number"
+                autoComplete="price"
+                onChange={handleChange}
+              />
+            </Grid>
             <FormControl className={classes.formControl} fullWidth>
-              <InputLabel id="demo-simple-select-label">Type</InputLabel>
+              <InputLabel id="demo-simple-select-label">Coach</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                name="type"
-                onChange={handleChange}
-              >
-                {types.map((type) => (
-                  <MenuItem value={type.name}>{type.name}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
+                name="coachId"
                 required
                 onChange={handleChange}
-                type="date"
-                name="date"
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                require
-                type="file"
-                onChange={handleImage}
-                name="image"
-                variant="outlined"
-              />
-            </Grid>
+              >
+                {filtered.map((filtered) => (
+                  <MenuItem value={filtered.id}>{filtered.username}</MenuItem>
+                ))}
+              </Select>
+              <Typography variant="body2" color="textSecondary" align="center">
+                Only assigned coaches can be set to sessions
+              </Typography>
+            </FormControl>
           </Grid>
 
           <Button
@@ -159,7 +157,7 @@ export default function ClassForm() {
             color="primary"
             className={classes.submit}
           >
-            Add Class
+            Add Session
           </Button>
           <Grid container justify="flex-end">
             <Grid item></Grid>

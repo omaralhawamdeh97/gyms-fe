@@ -61,3 +61,32 @@ const setUser = (token) => {
     };
   }
 };
+export const fetchUsers = () => {
+  return async (dispatch) => {
+    try {
+      const res = await instance.get("/users");
+
+      dispatch({
+        type: actionTypes.FETCH_USERS,
+        payload: res.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+// export const updateUser = (body,user) => {
+//   return async (dispatch) => {
+//     try {
+//       const res = await instance.put(`${user.id}`,body);
+
+//       dispatch({
+//         type: actionTypes.FETCH_USERS,
+//         payload: res.data,
+//       });
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+// };

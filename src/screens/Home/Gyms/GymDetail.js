@@ -15,6 +15,7 @@ import React from "react";
 import InputLabel from "@material-ui/core/InputLabel";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -28,9 +29,9 @@ const useStyles = makeStyles((theme) => ({
 
 const GymDetail = () => {
   const styles = useStyles();
-  console.log("gymdeta");
-  const [query, setQuery] = useState("");
 
+  const [query, setQuery] = useState("");
+  const user = useSelector((state) => state.authReducer.user);
   const { gymSlug } = useParams();
   const [filterBy, setFilterBy] = React.useState("");
   const gyms = useSelector((state) => state.gymsReducer.gyms);
@@ -47,7 +48,7 @@ const GymDetail = () => {
   const filterByAvailable = classList.filter(
     (clax) => clax.isAvailable === true
   );
-  console.log(filterByAvailable);
+
   if (!gym) return <Redirect to="/" />;
   const handleChange = (event) => {
     setFilterBy(event.target.value);
@@ -67,8 +68,7 @@ const GymDetail = () => {
           <h3 style={{ marginTop: "20px", marginBottom: "10px" }}>
             {gym.name}
           </h3>
-          <CardImage alt={gym.name} src={gym.image} />
-
+          <CardImage alt={gym.name} src={gym.image} style={{ height: 600 }} />
           <div
             style={{
               display: "flex",
@@ -94,17 +94,29 @@ const GymDetail = () => {
                   <em>None</em>
                 </MenuItem>
 
-                <MenuItem value={"available"}>Available</MenuItem>
+                <MenuItem value={"available"}>Availablity</MenuItem>
               </Select>
             </FormControl>
           </div>
-          <Button
-            style={{ marginTop: "20px" }}
-            variant="outlined"
-            color="primary"
-          >
-            New Class
-          </Button>
+          {user?.role === "admin" || user?.role === "owner" ? (
+            <div style={{ justifyContent: "space-around" }}>
+              <div>
+                <Link to={`/gyms/${gym.id}/classes`}>
+                  <Button variant="outlined" color="primary">
+                    New Class
+                  </Button>
+                </Link>
+              </div>
+              <Link to={`/gyms/${gym.id}/coaches`}>
+                <Button variant="outlined" color="primary">
+                  Assign a coach
+                </Button>
+              </Link>
+            </div>
+          ) : (
+            <div />
+          )}
+          <h3 style={{ marginTop: "20px", marginBottom: "10px" }}>Classes :</h3>
           <ListWrapper>
             {filterBy === "available"
               ? filterByAvailable.map((x) => <ClassCard clax={x} />)

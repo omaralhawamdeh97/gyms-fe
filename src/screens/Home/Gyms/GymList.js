@@ -6,7 +6,7 @@ const GymList = () => {
   const gymList = gyms?.map((gym) => <GymCard gym={gym} />);
   return (
     <div>
-      <h2 style={{ marginTop: "52px" }}>Pick Your Gym</h2>
+      {/* <h2 style={{ marginTop: "52px" }}>Pick Your Gym</h2> */}
       <ListWrapper>{gymList}</ListWrapper>
     </div>
   );

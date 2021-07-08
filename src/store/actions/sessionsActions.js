@@ -2,13 +2,13 @@ import axios from "axios";
 import instance from "./instance";
 import * as actionTypes from "./actionsTypes";
 
-export const fetchClasses = () => {
+export const fetchSessions = () => {
   return async (dispatch) => {
     try {
-      const res = await axios.get("http://localhost:8000/classes");
+      const res = await axios.get("http://localhost:8000/sessions");
 
       dispatch({
-        type: actionTypes.FETCH_CLASSES,
+        type: actionTypes.FETCH_SESSIONS,
         payload: res.data,
       });
     } catch (error) {
@@ -16,18 +16,17 @@ export const fetchClasses = () => {
     }
   };
 };
-export const addClass = (newClass) => {
+export const addSession = (newSession) => {
   return async (dispatch) => {
     try {
       const token = localStorage.getItem("myToken");
       instance.defaults.headers.common.Authorization = `Bearer ${token}`;
-      const formData = new FormData();
-      for (const key in newClass) formData.append(key, newClass[key]);
-      const res = await instance.post(`/classes`, formData);
+
+      const res = await instance.post(`/sessions`, newSession);
 
       dispatch({
-        type: actionTypes.ADD_CLASS,
-        payload: { newClass: res.data },
+        type: actionTypes.ADD_SESSION,
+        payload: { newSession: res.data },
       });
     } catch (error) {}
   };

@@ -125,13 +125,6 @@ export default function GymForm() {
           >
             Submit
           </Button>
-          <Grid container justify="flex-start">
-            <Grid item>
-              <Link to="/" variant="body2">
-                Back
-              </Link>
-            </Grid>
-          </Grid>
         </form>
       </div>
       <Box mt={5}>

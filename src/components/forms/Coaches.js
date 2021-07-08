@@ -10,11 +10,12 @@ import Container from "@material-ui/core/Container";
 import { useHistory, useParams } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addClass } from "../../store/actions/classesAction";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import { useEffect } from "react";
+import { fetchUsers } from "../../store/actions/authActions";
 
 function Copyright() {
   return (
@@ -52,105 +53,60 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ClassForm() {
+export default function Coaches() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
-  const types = useSelector((state) => state.typesReducer.types);
-  const { gymId } = useParams();
-
+  //   useEffect(() => {
+  //     dispatch(fetchUsers());
+  //   }, []);
+  const users = useSelector((state) => state.authReducer.users);
+  const filtered = users.filter(
+    (user) => user.role === "member" || user.role === "coach"
+  );
+  //   const { classId } = useParams();
+  console.log(filtered.id, "filtered");
   let initialMember = {
-    name: "",
-    price: "",
-    type: "",
-    date: "",
-    image: "",
-    gymId: gymId,
+    role: "",
   };
   const [member, setMember] = useState(initialMember);
 
   const handleChange = (event) => {
     setMember({ ...member, [event.target.name]: event.target.value });
   };
-  const handleImage = (event) => {
-    setMember({ ...member, image: event.target.files[0] });
-  };
-
+  const [id, setId] = useState();
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(addClass(member));
+    // dispatch(addSession(member));
     history.goBack();
   };
-
+  console.log(id, "id");
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Add Class
+          Assign a new coach
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <div className="ahmad"></div>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                label="Name"
-                name="name"
-                autoComplete="name"
-                autoFocus
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                label="Price"
-                name="price"
-                type="number"
-                autoComplete="price"
-                onChange={handleChange}
-              />
-            </Grid>
-
-            <FormControl className={classes.formControl} fullWidth>
-              <InputLabel id="demo-simple-select-label">Type</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                name="type"
-                onChange={handleChange}
-              >
-                {types.map((type) => (
-                  <MenuItem value={type.name}>{type.name}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                required
-                onChange={handleChange}
-                type="date"
-                name="date"
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                require
-                type="file"
-                onChange={handleImage}
-                name="image"
-                variant="outlined"
-              />
-            </Grid>
-          </Grid>
+          <FormControl className={classes.formControl} fullWidth>
+            <InputLabel id="demo-simple-select-label">Member</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              name="role"
+              required
+              onChange={handleChange}
+            >
+              {filtered.map((filtered) => (
+                <MenuItem value={setId(`coach`)}>{filtered.username}</MenuItem>
+              ))}
+            </Select>
+            <Typography variant="body2" color="textSecondary" align="center">
+              Only assigned members or coaches can be set to gym coaches
+            </Typography>
+          </FormControl>
 
           <Button
             type="submit"
@@ -159,11 +115,8 @@ export default function ClassForm() {
             color="primary"
             className={classes.submit}
           >
-            Add Class
+            Assign to coach
           </Button>
-          <Grid container justify="flex-end">
-            <Grid item></Grid>
-          </Grid>
         </form>
       </div>
       <Box mt={5}>
